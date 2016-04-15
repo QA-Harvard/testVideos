@@ -20,7 +20,7 @@ public class VideoTranscriptParser {
             transcriptFileFullPath = transcriptFileParentFolder + locale + "_transcripts/" + videoObj.getVideoTranscriptFileName();
 
             try {
-                videoTranscriptContent = txtReader.readTxtContent(transcriptFileFullPath, locale);
+                videoTranscriptContent = txtReader.readTxtContent(transcriptFileFullPath, locale, videoObj.getKalturaId());
 
             } catch (IOException ie) {
                 ie.printStackTrace();

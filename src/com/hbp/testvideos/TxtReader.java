@@ -5,19 +5,50 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 
 /**
  * Created by jun.chen on 3/17/16.
  */
 public class TxtReader {
 
-    public StringBuffer readTxtContent(String fullFilePath, String locale) throws IOException {
+    private static ArrayList<String> spanishIsoTranscriptList = new ArrayList<String>();
+    public static final String mapping_folder= "/Users/jun.chen/Videos/mapping/";
+    public static final String spanish_iso_list_file = "spanish_iso_transcripts.txt";
+
+    static {
+        try {
+            FileInputStream fis = new FileInputStream(mapping_folder + spanish_iso_list_file);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(fis));
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+
+                spanishIsoTranscriptList.add(line);
+            }
+
+        } catch (IOException io) {
+            io.printStackTrace();
+
+        }
+    }
+
+
+    public TxtReader(){
+
+    }
+
+    public StringBuffer readTxtContent(String fullFilePath, String locale, String KalturaId) throws IOException {
 
         StringBuffer txtContentBuffer = new StringBuffer();
 
         BufferedReader reader;
         FileInputStream fis = new FileInputStream(fullFilePath);
-        reader = new BufferedReader(new InputStreamReader(fis, Charset.forName("UTF-8")));
+        if(locale.equalsIgnoreCase("es_LA") && spanishIsoTranscriptList.contains(KalturaId)){
+            reader = new BufferedReader(new InputStreamReader(fis, Charset.forName("ISO-8859-1")));
+        }else{
+            reader = new BufferedReader(new InputStreamReader(fis, Charset.forName("UTF-8")));
+        }
         String line;
         int lineCount =1;
         while ((line = reader.readLine()) != null) {
