@@ -25,9 +25,9 @@ public class DocReader {
 
 
     for (XWPFParagraph para : paragraphs) {
-        paragraphSB.append("<P>");
+        paragraphSB.append("<p><span>");
         paragraphSB.append(para.getText());
-        paragraphSB.append("</P>");
+        paragraphSB.append("</span></p>");
 
     }
     fis.close();

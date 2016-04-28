@@ -61,6 +61,8 @@ public class TxtReader {
             }
 
             //Might need to removing bomb in the future: but ok for now.
+            //Strip out tab so it would not fxck up JSON, Jackson.
+            line = line.replaceAll("\t", "");
             txtContentBuffer.append(line);
 
             lineCount++;
@@ -75,16 +77,16 @@ public class TxtReader {
     public StringBuffer startParagraph(StringBuffer txtContentBuffer, Boolean firstParagraph){
 
         if(firstParagraph){
-            txtContentBuffer.append("<P>");
+            txtContentBuffer.append("<p><span>");
         }else{
-            txtContentBuffer.append("</P><P>");
+            txtContentBuffer.append("</span></p><p><span>");
         }
         return txtContentBuffer;
 
     }
 
     public StringBuffer endParagraph(StringBuffer txtContentBuffer){
-        txtContentBuffer.append("</P>");
+        txtContentBuffer.append("</span></p>");
         return txtContentBuffer;
     }
 }
